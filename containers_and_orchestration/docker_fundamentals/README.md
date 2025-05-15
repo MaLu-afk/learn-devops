@@ -9,9 +9,7 @@ Docker es una herramienta esencial para gestionar y publicar soluciones de softw
 
 **¿Cómo funciona?**
 
-<div style="text-align:center">
-    <img src="image.png" alt="alt text" />
-</div>
+![image.png](image.png)
 
 Esta es la arquitectura básica de Docker.
 
@@ -42,6 +40,14 @@ Esta es la arquitectura básica de Docker.
 |-|-|-|
 |Virtualiza|Sistema operativo (a nivel de aplicación)|El hardware completo (a nivel del sistema)|
 |Ideal para|Microservicios, CI/CD, entornos ligeros|Simular entornos completos (redes con routers, firewalls, etc.), probar múltiples SO|
-|Hardware|Hardware real|Sin hardware|
-|Necesita|Mantenimiento|Control de versiones|
-|Requiere|Software adicional|Sin software adicional|
+|Hardware|Sin hardware|Hardware real|
+|Necesita|Control de versiones|Mantenimiento|
+|Requiere|Sin software adicional|Software adicional|
+
+
+
+# 2. Creación de Imágenes con Docker
+
+![image.png](image-1.png)
+
+
