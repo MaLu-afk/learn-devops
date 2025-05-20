@@ -52,20 +52,28 @@ Esta es la arquitectura básica de Docker.
 
 Lo que sigues es ejecutar el siguiente comando para crear la imagen:
 
-`Docker build .`
+`docker build .`
 
 Ahora verifiquemos la imagen creada:
 
 `docker images`
 
-Como se pudo notar, no tiene un nombre adecuado. Ahora para eliminar forzadamente, se hace lo siguiente:
-`Docker mri -f [IMAGE ID]`
+Como se pudo notar, no tiene un nombre adecuado. Ahora, para eliminar forzadamente se hace lo siguiente:
+`docker mri -f [IMAGE ID]`
 
-Ahora si ejecutamos el comando asignando un nombre y etiqueta:
+Ahora, sí ejecutamos el comando asignando un nombre y etiqueta:
 `docker build -t sitioweb:latest .`
 
 Vamos a crear el contenedor con:
 `docker run -it --rm -d -p 8080:80 --name web sitioweb`
+    
+    Este comando, hace lo siguiente:
+    + `docker run`: este comando principal se usa para crear y ejecutar un contenedor desde la imagen de Docker.
+    + `-it`: (interactivo) permite ver los logs dentro de la terminal.
+    + `--rm`: eliminar las versiones anteriores del contendor.
+    + `-d`: el contenedor se ejecuta en un segundo plano listo para usarse posteriomente.
+    + `-p`: mapea el puerto del contendor con el puerto de la aplicación para exponerla.
+    + `-- name`: nombre del contenedor.
 
 Puede pasar que el puerto que se designe esté ocupado. Para verificar y liberar el puerto, hacemos lo siguiente:
 1. ejecutar `netstat -aon | findstr :8080`: 
@@ -82,8 +90,37 @@ Puede pasar que el puerto que se designe esté ocupado. Para verificar y liberar
 
 3. ejutar `taskkill /PID [PID] /F`: Sirve para forzar el cierre de un proceso específico.
 
- 
+Continuando con el aprendizaje de nuevos comandos, ahora si queremos buscar las imágenes pero en base a los tags, lo podemos hacer como sigue:
+`docker images --filter=reference='*:1.0'`
 
+Si queremmos visualizar el images ID más extendida real, usamos lo siguiente:
+`docker images --no-trunc`
 
+Para cambiar el tag de una imagen escribimos como sigue:
+`docker images tag sitioweb:latest amin/sitioweb:latest`
 
+Para eliminar una imagen se usa:
+`docker rmi amin/sitioweb:latest`
 
+O eliminarlo forzadamente con el id de la imagen:
+`docker rmi -f [IMAGE ID]`
+
+Cabe mencionar que los nombres de los contenedores no debe repetirse.
+
+Si queremos visulizar todos los contenederes, incluso los que no se ejecuten, se usa:
+`docker ps -a`
+
+Ahora, si queremos visualizar la estadística del desempeño de nuestro computador al ejecutar un contenedor desde la línea de comandos, se usa:
+``docker stats`
+
+# 3. Volúmenes y Redes  de Docker
+
+Los volúmenes son espacios compartidos entre una máquina local y un contenedor de Docker.
+
+Por ejemplo, se puede ejecutar el siguiente comando para permitir esto:
+` docker run -it --rm -d -p 8080:80 -v ./sitio:/user/share/nginx/html/sitio --name web nginx`
+
+Lo que hace este comando, en especial la parte de `-v ./sitio:/user/share/nginx/html/sitio`, monta el directorio local `./sitio` sobre el directorio `/user/share/nginx/html/sitio`. Los cambios que se hagan de manera local, se mostrarán en el contendor. Por ejemplo, si en el archivo linktree.html se cambia la imagen preliminar por una que se encuentra en la carpeta assets, se verá los cambios realizados. Asimismo, si se eliminar un archivo desde el CLI de un contenedor Docker se evidenciará ese cambio en la máquina local.
+
+Ahora bien, podemos hacer lo mismo si se declara desde el dockerfile, el cual se ve así:
+`VOLUME ["/sitio", "/usr/share/nginx/html"]`, este comando es susceptible a cambios. Mientras que el siguiente comando: `COPY /sitio /usr/share/nginx/html`, hace que la información se almacene de forma permanente en la imagen.
