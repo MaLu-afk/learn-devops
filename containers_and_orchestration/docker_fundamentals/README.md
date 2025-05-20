@@ -124,3 +124,16 @@ Lo que hace este comando, en especial la parte de `-v ./sitio:/user/share/nginx/
 
 Ahora bien, podemos hacer lo mismo si se declara desde el dockerfile, el cual se ve así:
 `VOLUME ["/sitio", "/usr/share/nginx/html"]`, este comando es susceptible a cambios. Mientras que el siguiente comando: `COPY /sitio /usr/share/nginx/html`, hace que la información se almacene de forma permanente en la imagen.
+
+**¿Qué son las redes en Docker?**
+
+Las redes en Docker son como puentes virtuales que permiten que los contenedores se comuniquen entre si (e.g. una app necesita una base de datos) o la comunicación con una máquina local o el mundo exterior (como exponer una API en el navegador).
+
+Tenemos el siguiente comando para inspecionar un contenedor en relación a la red:
+`docker inspect [NOMBRE/ID CONTENEDOR]`
+
+Con esto se puede ver cosas como:
+- IP privada del contenedor.
+- Puertos mapeados (e.g. 8080:80).
+- Tipo de red asignada, com bridge (red por defecto).
+
